@@ -642,6 +642,12 @@ impl App {
                 Event::Scroll(scroll) => self.scroll(lay, theme, text, scroll),
                 Event::Key(key) if key.state == ButtonState::Pressed => self.key(frame, key, lay),
                 Event::Paste(text) => self.paste(text),
+                // Upuszczenie plików w oknie terminala wstawia ich ścieżki
+                // (w cudzysłowach, gotowe do użycia w powłoce).
+                Event::Drop { paths, .. } => {
+                    let text = shell_paths(&paths);
+                    self.paste(&text);
+                }
                 Event::Window(WindowEvent::Resize(_)) => self.close_context_menu(),
                 _ => {}
             }
@@ -1310,8 +1316,46 @@ fn control_byte(keysym: u32) -> Option<u8> {
     }
 }
 
+/// Ścieżki plików jako argumenty powłoki (z cudzysłowami, gdy trzeba).
+fn shell_paths(paths: &[std::path::PathBuf]) -> String {
+    paths
+        .iter()
+        .map(|path| {
+            let text = path.display().to_string();
+            let simple = !text.is_empty()
+                && text
+                    .chars()
+                    .all(|ch| ch.is_ascii_alphanumeric() || "/._-+@%:,".contains(ch));
+            if simple {
+                text
+            } else {
+                format!("'{}'", text.replace('\'', "'\\''"))
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
 #[cfg(test)]
 mod tests {
+    use super::shell_paths;
+    use std::path::PathBuf;
+
+    #[test]
+    fn dropped_paths_are_quoted_for_the_shell() {
+        assert_eq!(
+            shell_paths(&[PathBuf::from("/home/ula/plik.txt")]),
+            "/home/ula/plik.txt"
+        );
+        assert_eq!(
+            shell_paths(&[
+                PathBuf::from("/home/ula/Moje pliki/a.txt"),
+                PathBuf::from("/tmp/x'y"),
+            ]),
+            "'/home/ula/Moje pliki/a.txt' '/tmp/x'\\''y'"
+        );
+    }
+
     use super::*;
     use libluna_core::{Modifiers, Size};
 

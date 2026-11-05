@@ -778,6 +778,7 @@ pub fn paint_settings(
     text: &TextEngine,
     size: Size,
     prefs: &Prefs,
+    pointer: Option<Point>,
 ) {
     let mut ctx = PaintCtx::new(scene, theme, text);
     settings_dialog().paint(&mut ctx, size);
@@ -817,6 +818,8 @@ pub fn paint_settings(
             .position(|s| *s == prefs.scheme)
             .unwrap_or(0),
     );
+    let hover = pointer.and_then(|p| scheme.index_at(lay.scheme, p));
+    scheme.set_hovered(hover);
     scheme.paint(&mut ctx, lay.scheme);
 
     let mut preset = ViewSwitcher::new(Preset::ALL.iter().map(|p| libluna_i18n::tr(p.label())));
@@ -826,10 +829,16 @@ pub fn paint_settings(
             .position(|p| *p == prefs.preset)
             .unwrap_or(0),
     );
+    let hover = pointer.and_then(|p| preset.index_at(lay.preset, p));
+    preset.set_hovered(hover);
     preset.paint(&mut ctx, lay.preset);
 
-    Button::new("−").paint(&mut ctx, lay.font_smaller);
-    Button::new("+").paint(&mut ctx, lay.font_larger);
+    let mut smaller = Button::new("−");
+    smaller.set_hovered(pointer.is_some_and(|p| lay.font_smaller.contains(p)));
+    smaller.paint(&mut ctx, lay.font_smaller);
+    let mut larger = Button::new("+");
+    larger.set_hovered(pointer.is_some_and(|p| lay.font_larger.contains(p)));
+    larger.paint(&mut ctx, lay.font_larger);
     ctx.label_center(
         lay.font_value.center().x,
         lay.font_value.center().y,
@@ -846,6 +855,8 @@ pub fn paint_settings(
             .position(|s| *s == prefs.cursor_shape)
             .unwrap_or(0),
     );
+    let hover = pointer.and_then(|p| shape.index_at(lay.cursor_shape, p));
+    shape.set_hovered(hover);
     shape.paint(&mut ctx, lay.cursor_shape);
 
     color_row(
@@ -867,7 +878,9 @@ pub fn paint_settings(
         libluna_i18n::tr(prefs.cursor_name()),
     );
 
-    Button::new(libluna_i18n::tr("Done")).paint(&mut ctx, lay.done);
+    let mut done = Button::new(libluna_i18n::tr("Done"));
+    done.set_hovered(pointer.is_some_and(|p| lay.done.contains(p)));
+    done.paint(&mut ctx, lay.done);
 }
 
 fn color_row(ctx: &mut PaintCtx, area: Rect, color: Color, name: String) {

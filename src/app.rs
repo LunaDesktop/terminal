@@ -1102,7 +1102,14 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         };
         ui::paint(frame.scene, &theme, frame.text, frame.size, &view);
         if app.settings_open {
-            ui::paint_settings(frame.scene, &theme, frame.text, frame.size, &app.prefs);
+            ui::paint_settings(
+                frame.scene,
+                &theme,
+                frame.text,
+                frame.size,
+                &app.prefs,
+                app.pointer,
+            );
         }
         if let Some(menu) = &app.context_menu {
             ui::paint_context_menu(frame.scene, &theme, frame.text, &menu.menu, menu.panel);

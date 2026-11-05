@@ -74,7 +74,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("saved docs/images/luna-terminal.png ({W}x{H})");
 
     // Ten sam kadr z otwartym oknem Ustawień (dokumentacja kolorystyki).
-    ui::paint_settings(&mut scene, &theme, &text, size, &prefs);
+    ui::paint_settings(&mut scene, &theme, &text, size, &prefs, None);
     renderer.draw(&scene, 1.0, Color::from_rgba8(0x10, 0x12, 0x18, 0xff));
     let png = renderer.encode_png().ok_or("failed to encode PNG")?;
     std::fs::write("docs/images/luna-terminal-settings.png", png)?;

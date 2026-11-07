@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Terminal
+Name[pl]=Terminal
+Name[de]=Terminal
+Comment=Luna terminal emulator
+Comment[pl]=Emulator terminala Luny
+Comment[de]=Terminalemulator für Luna
+Exec=luna-terminal
+Icon=utilities-terminal
+Terminal=false
+Categories=System;TerminalEmulator;
+Keywords=terminal;shell;console;pty;
+Keywords[pl]=terminal;powłoka;konsola;pty;
+Keywords[de]=terminal;shell;konsole;pty;

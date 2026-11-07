@@ -52,6 +52,6 @@ jobs:
       binaries: "luna-terminal"
       files: |
         packaging/eu.luna.Terminal.desktop:/usr/share/applications/eu.luna.Terminal.desktop:644
-      deb_depends: "libc6,libxkbcommon0,libxcursor1,libwayland-client0"
-      rpm_depends: "glibc,libxkbcommon,libXcursor,libwayland-client"
-      arch_depends: "glibc,libxkbcommon,libxcursor,wayland"
+      deb_depends: "libc6,libxkbcommon0,libxcursor1,libwayland-client0,libluna"
+      rpm_depends: "glibc,libxkbcommon,libXcursor,libwayland-client,libluna"
+      arch_depends: "glibc,libxkbcommon,libxcursor,wayland,libluna"

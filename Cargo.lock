@@ -279,17 +279,20 @@ checksum = "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a"
 [[package]]
 name = "libluna-core"
 version = "0.0.9"
-source = "git+https://github.com/LunaDesktop/libLuna.git#c4771db296bdd073d6fed331f0978f625e9628a5"
+source = "git+https://github.com/LunaDesktop/libLuna.git#16874dc5da0275b4db7583abac44d09d3e6cceb7"
 
 [[package]]
 name = "libluna-i18n"
 version = "0.0.9"
-source = "git+https://github.com/LunaDesktop/libLuna.git#c4771db296bdd073d6fed331f0978f625e9628a5"
+source = "git+https://github.com/LunaDesktop/libLuna.git#16874dc5da0275b4db7583abac44d09d3e6cceb7"
+dependencies = [
+ "libluna-core",
+]
 
 [[package]]
 name = "libluna-platform"
 version = "0.0.9"
-source = "git+https://github.com/LunaDesktop/libLuna.git#c4771db296bdd073d6fed331f0978f625e9628a5"
+source = "git+https://github.com/LunaDesktop/libLuna.git#16874dc5da0275b4db7583abac44d09d3e6cceb7"
 dependencies = [
  "calloop",
  "libc",
@@ -303,7 +306,7 @@ dependencies = [
 [[package]]
 name = "libluna-render"
 version = "0.0.9"
-source = "git+https://github.com/LunaDesktop/libLuna.git#c4771db296bdd073d6fed331f0978f625e9628a5"
+source = "git+https://github.com/LunaDesktop/libLuna.git#16874dc5da0275b4db7583abac44d09d3e6cceb7"
 dependencies = [
  "fontdue",
  "libluna-core",
@@ -314,7 +317,7 @@ dependencies = [
 [[package]]
 name = "libluna-widgets"
 version = "0.0.9"
-source = "git+https://github.com/LunaDesktop/libLuna.git#c4771db296bdd073d6fed331f0978f625e9628a5"
+source = "git+https://github.com/LunaDesktop/libLuna.git#16874dc5da0275b4db7583abac44d09d3e6cceb7"
 dependencies = [
  "libluna-core",
  "libluna-render",
@@ -346,7 +349,7 @@ checksum = "5d15f86d12da44cd8d4ec3c73984537eb7f4cadcb9776a575a0a8a05ca11005c"
 
 [[package]]
 name = "luna-terminal"
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
  "libc",
  "libluna-core",
